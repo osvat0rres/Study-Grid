@@ -26,6 +26,8 @@ urlpatterns = [
     path("api/users/", include("users.urls")),
     path("api/quizzes/", include("quizzes.urls")),
     path("api/documents/", include("documents.urls")),
+    
+    #This adds Django REST Framework built-in login and logout page to the API
     path("api-auth/", include("rest_framework.urls")),
 ]
 
