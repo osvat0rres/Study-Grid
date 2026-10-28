@@ -1,0 +1,22 @@
+AI Model:
+For the AI part, an AI model was downlosded that can generate text,
+1. what we install
+    - Ollama - the AI runtime
+        Ollama is the software that downloades, loads, and runs AI 
+        model on your comeputer. It gives other programs, including Django
+        a way to communucate with those models throught a local API
+        irm https://ollama.com/install.ps1 | iex
+    - Qwen3 4B - the AI model
+        This is the actual languag model. It can read text you provide, undestand the context,
+        and generate next text, ushc as quiz questions, answer choise, and explorations
+        ollama run qwen3:14b
+Think of Ollama ad the engine that runs the AI and Qwen3 as the AI brain running inside
+that engine
+
+2. Architecture of the app
+    1. User uploades notes (PDF or TXT in React)
+    2. Djnago extracts the text 
+    3. Djnago sends the text to Ollama (Via https)
+    4. Qwen3 generates the quiz
+    5. Djnago saves the quiz
+    6.React displays the quiz
