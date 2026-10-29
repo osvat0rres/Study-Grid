@@ -24,3 +24,15 @@ What is ai_services.py?
     - This file containd the python code responsible fro communicating with the AI model
     abd converting its reponse into quiz questions that Django application can uses. 
     Ollama with Qwen3 was uses because we wanted to use a local AI model without needing an OpenAI key
+Structure
+    1. Recives study notes
+    2. Build the prompt (tells Qwen ehaty to generate and waht JSON format to use)
+    3. Call Ollama (send the HTTP request and waits for the reponse)
+    4. parse the JSON (Convert the AI message into python data)
+    5. Validate the questions (Checks text, fourc choises, the correct anser and the explanation)
+    6. Return the result (Gives validated question dictionaries back to the Django view)
+Things to remember
+    - The prompt tell the AI what to due. It defines the desired questions and response structure
+    - Validation checks the AI's output. The AI retunrs incompleta or malformed data, even whne you request JSON
+    - The Django views saves the result. ai_servives.py generate and validated the questions data; it does not
+        directoy write to PostgresSQL

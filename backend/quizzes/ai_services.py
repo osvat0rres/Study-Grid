@@ -1,11 +1,14 @@
 
-
+# converts JSON text into python objects and help you code read the AI's
 import json
+# provide regular expression, which can help niormalize answer by removing punctuation and other difference
 import re
 import requests
 
 
+
 OLLAMA_URL = "http://localhost:11434/api/chat"
+#This identifies the AI model that was downloaded
 OLLAMA_MODEL = "qwen3:4b"
 
 
@@ -13,6 +16,8 @@ def normalize_answer(text):
     """
     Normalize an answer by ignoring punctuation,
     capitalization, and whitespace.
+    
+    casefild()- converst text to a case-insensitive form
     """
     return re.sub(r"[^a-z0-9]+", "", text.casefold())
 
@@ -35,7 +40,8 @@ def generate_quiz_questions(source_text, num_questions=5):
 
     if not isinstance(num_questions, int) or not 1 <= num_questions <= 20:
         raise ValueError("The number of questions must be between 1 and 20.")
-
+    
+    #This section tell Qwen3 what to due
     prompt = f"""
 /no_think
 
@@ -89,18 +95,19 @@ STUDY NOTES:
                         "content": prompt,
                     }
                 ],
-                "think": False,
-                "format": "json",
-                "stream": False,
+                "think": False, # Request that the model's seperate thinking mode be disabled
+                "format": "json", #request a JSON-formatted reponse
+                "stream": False, #Waites for the response instead of reciving incremental chunks
                 "options": {
-                    "temperature": 0.2,
-                    "repeat_penalty": 1.15,
-                    "num_predict": 2048,
+                    "temperature": 0.2, #Increase more consistent output with less randomness
+                    "repeat_penalty": 1.15, # Discourage repititive genration
+                    "num_predict": 2048, # Sets a maxumin of 2048 generated tokens
                 },
             },
             timeout=300,
         )
-
+        
+    # Handles connection errors
     except requests.RequestException as exc:
         raise RuntimeError(
             "Could not connect to Ollama. "
@@ -140,7 +147,8 @@ STUDY NOTES:
             f"Parsing error: {exc}. "
             f"Response preview: {content[:1000]}"
         ) from exc
-
+        
+    #checks the overall reponse structure
     if not isinstance(data, dict):
         raise RuntimeError("The AI response must be a JSON object.")
 
