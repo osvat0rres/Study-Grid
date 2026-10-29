@@ -86,7 +86,7 @@ DATABASES = {
         "ENGINE": 'django.db.backends.postgresql',
         "NAME": "study_quiz_db",
         "USER": "postgres",
-        "PASSWORD":"**",
+        "PASSWORD":"Aarontorres3108!",
         "HOST": "localhost",
         "POST": "5432"
     }
