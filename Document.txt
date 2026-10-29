@@ -20,3 +20,7 @@ that engine
     4. Qwen3 generates the quiz
     5. Djnago saves the quiz
     6.React displays the quiz
+What is ai_services.py?
+    - This file containd the python code responsible fro communicating with the AI model
+    abd converting its reponse into quiz questions that Django application can uses. 
+    Ollama with Qwen3 was uses because we wanted to use a local AI model without needing an OpenAI key
