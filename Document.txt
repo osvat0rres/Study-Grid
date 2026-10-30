@@ -36,3 +36,9 @@ Things to remember
     - Validation checks the AI's output. The AI retunrs incompleta or malformed data, even whne you request JSON
     - The Django views saves the result. ai_servives.py generate and validated the questions data; it does not
         directoy write to PostgresSQL
+
+How Register.js works 
+1. React Registers collects username, email, and password
+2. auth.js callls Axios and sends a POST request
+3. Django REST Framework validates information and creats the user
+4. React Register.js displys success or error message
