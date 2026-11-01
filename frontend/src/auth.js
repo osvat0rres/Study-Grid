@@ -25,5 +25,5 @@ export const logoutUser = () => {
 
 // Check wether an access token exists
 export const isAuthenticated = () => {
-    return Bolean(localStorage.getItem("access"))
+    return Boolean(localStorage.getItem("access"))
 }

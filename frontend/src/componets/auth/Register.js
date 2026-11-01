@@ -76,6 +76,14 @@ function Register() {
             setLoading(false);
         }
     };
+    return(
+        <main className="auth-container">
+            <section className="auth-card">
+                
+                
+            </section>
+        </main>
+    );
 }
 
 export default Register()
