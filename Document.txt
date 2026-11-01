@@ -42,3 +42,10 @@ How Register.js works
 2. auth.js callls Axios and sends a POST request
 3. Django REST Framework validates information and creats the user
 4. React Register.js displys success or error message
+
+registration form
+1. User enters information
+2. handleChange() Updates React state
+3. handleSubmit() Submits the form using registerUser()
+4. Django REST Framework - Validates information and creates account
+5. React displays the result - Success message or error message

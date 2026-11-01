@@ -4,11 +4,13 @@ import { registerUser  } from "../../auth";
 function Register() {
 
     // Inital state of  variables
+
+
     const [formData, setFormData] = useState({
-        username : "",
-        email : "",
-        password : ""
-    });
+        username: "",
+        email: "",
+        password: ""
+    })
 
     // This stores a message when registration succeeds
     const [message, setMessage] = useState("");
@@ -22,6 +24,13 @@ function Register() {
 
     //This function is use to prevent users from repeatdly clicking the registration
     // button while Django proccess their request
+
+    /*
+        Why do we use ...formData inside handle change?
+        it prevents existing form values while updating the field that changed
+        The spread operator copies the exiting form data so changing the email
+        doesn't erase the username or password
+    */
     const handleChange = (event) => {
         setFormData({
             ...formData,
@@ -79,11 +88,41 @@ function Register() {
     return(
         <main className="auth-container">
             <section className="auth-card">
-                
+                <h2>Create Your account</h2>
+                <p>Join Study-Grid and start studyinh smarter</p>
+
+                {message && (
+                    <p className="success-message">{message}</p>
+                )}
+
+                {error && (
+                    <p className="error-message">{error}</p>
+                )}
+
+                <form onSubmit ={handleSubmit}>
+                    <label>Username</label>
+                    <input type="text" name="username" value={formData.username}
+                        onChange={handleChange} placeholder="Enter username" required/>
+
+                    <label>Email</label>
+                    <input type="email" name="email" value={formData.email}
+                    onChange={handleChange} placeholder="Enter your Email" required/>
+
+                    <label>Password</label>
+                    <input type="password" name="password" value={formData.password}
+                    onChange={handleChange} placeholder="Enter your password" minLength={8} required />
+
+                    <button type="submit" disabled={loading}>
+                        {loading ? "Creating Account..." : "Register"}
+                    </button>
+
+
+                </form>
+
                 
             </section>
         </main>
     );
 }
 
-export default Register()
+export default Register;
