@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import { registerUser  } from "../../auth";
+import "./Auth.css";
 
 function Register() {
 
@@ -85,11 +86,56 @@ function Register() {
             setLoading(false);
         }
     };
-    return(
-        <main className="auth-container">
-            <section className="auth-card">
-                <h2>Create Your account</h2>
-                <p>Join Study-Grid and start studyinh smarter</p>
+    return (
+    <main className="auth-container">
+
+        {/* Left colored section */}
+        <section className="auth-left">
+
+            <div className="brand">
+                <h1>Study-Grid</h1>
+                <span>AI-Powered Learning</span>
+            </div>
+
+            <div className="welcome-content">
+                <h2>Study Smarter.<br />Learn Better.</h2>
+
+                <p>
+                    Transform your study notes into personalized
+                    quizzes and take your learning to the next level.
+                </p>
+
+                <div className="feature">
+                    <span>✦</span>
+                    <p>Generate quizzes with AI</p>
+                </div>
+
+                <div className="feature">
+                    <span>✦</span>
+                    <p>Upload your own study notes</p>
+                </div>
+
+                <div className="feature">
+                    <span>✦</span>
+                    <p>Track your learning progress</p>
+                </div>
+            </div>
+
+            <div className="left-footer">
+                Your learning journey starts here.
+            </div>
+
+        </section>
+
+        {/* Right registration section */}
+        <section className="auth-right">
+
+            <div className="register-form">
+
+                <h2>Create Account</h2>
+                <p className="form-description">
+                    Sign up to get started with Study-Grid.
+                </p>
 
                 {message && (
                     <p className="success-message">{message}</p>
@@ -99,30 +145,36 @@ function Register() {
                     <p className="error-message">{error}</p>
                 )}
 
-                <form onSubmit ={handleSubmit}>
+                <form onSubmit={handleSubmit}>
+
                     <label>Username</label>
                     <input type="text" name="username" value={formData.username}
-                        onChange={handleChange} placeholder="Enter username" required/>
+                        onChange={handleChange} placeholder="Enter your username" required/>
 
-                    <label>Email</label>
-                    <input type="email" name="email" value={formData.email}
-                    onChange={handleChange} placeholder="Enter your Email" required/>
+                    <label>Email Address</label>
+                    <input type="email" name="email" value={formData.email} onChange={handleChange}
+                        placeholder="Enter your email" required />
 
                     <label>Password</label>
-                    <input type="password" name="password" value={formData.password}
-                    onChange={handleChange} placeholder="Enter your password" minLength={8} required />
-
+                    <input
+                        type="password" name="password" value={formData.password}
+                        onChange={handleChange} placeholder="Create a password" minLength={8} register />
                     <button type="submit" disabled={loading}>
-                        {loading ? "Creating Account..." : "Register"}
+                        {loading ? "Creating Account..." : "Create Account"}
                     </button>
-
 
                 </form>
 
-                
-            </section>
-        </main>
-    );
+                <p className="login-text">
+                    Already have an account? <span>Login</span>
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+);
 }
 
 export default Register;
