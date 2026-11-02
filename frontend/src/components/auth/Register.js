@@ -86,7 +86,7 @@ function Register() {
             setLoading(false);
         }
     };
-    return (
+     return (
     <main className="auth-container">
 
         {/* Left colored section */}
