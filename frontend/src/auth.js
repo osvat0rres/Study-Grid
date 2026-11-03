@@ -27,3 +27,9 @@ export const logoutUser = () => {
 export const isAuthenticated = () => {
     return Boolean(localStorage.getItem("access"))
 }
+
+
+export const getCurrentUser = async () => {
+    const response = await api.get("users/me/");
+    return response.data;
+};
