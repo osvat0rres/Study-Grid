@@ -1,17 +1,18 @@
 import React, {useState} from "react";
 import { registerUser  } from "../../auth";
 import "./Auth.css";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
 
     // Inital state of  variables
-
-
     const [formData, setFormData] = useState({
         username: "",
         email: "",
         password: ""
     })
+
+    const navigate = useNavigate()
 
     // This stores a message when registration succeeds
     const [message, setMessage] = useState("");
@@ -164,10 +165,12 @@ function Register() {
                     </button>
 
                 </form>
-
-                <p className="login-text">
-                    Already have an account? <span>Login</span>
-                </p>
+                    <p className="login-text">
+                        Already have an account? {" "} 
+                        <span onClick={() => navigate("/login")}>login</span>
+                    </p>
+    
+             
 
             </div>
 
