@@ -15,7 +15,14 @@ function Documents() {
     //Track whether the upload is proccessing
     const [loading, setLoading] = useState(false);
 
+    // Tracks which document is genrating a quiz
+    const [generatingQuizId, setGeneratingQuizId] = useState(null);
+
+    // Stores quiz generation errors
+    const [quizError, setQuizError] = useState("");
+
     // runs when the user select the file
+    // event represents the input event
     const handleFileChange = (event) => {
         const selectedFile = event.currentTarget.files?.[0];
 
@@ -54,6 +61,46 @@ function Documents() {
         }
     };
 
+    // Generates a quiz using the document
+   const handleGenerateQuiz = async (documentId) => {
+        setGeneratingQuizId(documentId);
+        setQuizError("");
+
+        //This sends a POST request to Django
+        try {
+            const response = await api.post("quizzes/generate/", {
+                // The ID of the uploaded document
+                document_id: documentId,
+                //How many questions Ollama should generate
+                num_questions: 5,
+            });
+
+            console.log("Generated quiz:", response.data);
+
+            // This block of code will executes when something goes wrong 
+            // inside the try block
+        } catch (err) {
+            console.error("Quiz generation error:", err);
+
+            /*  This retrives the error reponse returned by Django
+             The ?. is call a optional chaining. it prevenst JavaScript from 
+             if err.response doesn't exits
+            */
+
+            const responseData = err.response?.data;
+
+            if (responseData) {
+                setQuizError(JSON.stringify(responseData));
+            } else {
+                setQuizError("Unable to generate quiz.");
+            }
+
+        } finally {
+            setGeneratingQuizId(null);
+        }
+    };
+
+    // Allows React to execute code after rendering a component
     useEffect(() =>{
         fetchDocuments();
     },[]);
@@ -145,9 +192,20 @@ function Documents() {
 
                             </div>
 
-                            <span className="document-status">
-                                Ready
-                            </span>
+                            <div className="document-actions">
+                                <span className="document-status">
+                                    Ready
+                                </span>
+                                <button className="generate-quiz-button" onClick={() => handleGenerateQuiz(document.id)}
+                                    disabled={generatingQuizId !== null}>
+                                        {generatingQuizId === document.id
+                                                ? "Generating..." : "Generate Quiz"}
+                                </button>
+
+                                        {quizError && (
+                                                <p className="quiz-error">{quizError}</p>
+                                            )}
+                            </div>
 
                           </div>  
                         ))}
