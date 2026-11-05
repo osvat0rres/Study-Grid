@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import api from "../../api";
 import { Link } from "react-router-dom";
 import "./documents.css";
@@ -17,10 +17,47 @@ function Documents() {
 
     // runs when the user select the file
     const handleFileChange = (event) => {
-        setFile(event.target.file[0]);
+        const selectedFile = event.currentTarget.files?.[0];
+
+        if (!selectedFile) {
+            setFile(null);
+            return;
+        }
+
+        setFile(selectedFile);
         setMessage("");
         setError("");
     };
+    
+    // Uploaded documents from Django
+    const [documents, setDocuments] = useState([]);
+    // Weather documents are loading
+    const [loadingDocuments, setLoadingDocuments] = useState(true);
+    // Error message if loading fails
+    const [documentsError, setDocumentError] = useState("");
+
+    const fetchDocuments = async() => {
+        try{
+            const response = await api.get("documents/");
+
+            // Support both regular list and paginated reponses
+            const data = response.data;
+
+            setDocuments(Array.isArray(data) ? data : data.results || []);
+            setDocumentError("");
+        }catch(err){
+            console.error("Error loading documents: ", err);
+            setDocumentError("Unable to load documents. ");
+        }finally{
+            setLoadingDocuments(false);
+            
+        }
+    };
+
+    useEffect(() =>{
+        fetchDocuments();
+    },[]);
+
 
     // Sends the selectecd file to Django
     const handleUpload = async (event) =>  {
@@ -33,6 +70,11 @@ function Documents() {
 
         // FormData allows us to send file through HTTP
         const formData = new FormData();
+
+        // Automatically use the filename as the document title
+        const documentTitle = file.name.replace(/\.[^/.]+$/, "");
+
+        formData.append("title", documentTitle);
         formData.append("file", file);
 
         setMessage("");
@@ -43,7 +85,7 @@ function Documents() {
             await api.post("documents/", formData);
 
             setMessage("Document uploaded successfully!");
-            setFile(null);
+            await fetchDocuments();
 
             //clears the file input visually
             event.target.reset();
@@ -73,6 +115,47 @@ function Documents() {
             </header>
 
             <section className="upload-card">
+                <section className="documents-list-section">
+                    <h2>Your Documents</h2>
+
+                    {loadingDocuments && (
+                        <p>Loading documents...</p>
+                    )}
+
+                    {documentsError &&(
+                        <p className="error-message">{documentsError}</p>
+                    )}
+
+                    {!loadingDocuments && documents.lenght === 0 && (
+                        <p>You haven't uploaded any documents yet.</p>
+                    )}
+
+                    <div className="documents-list">
+
+                        {documents.map((document) => (
+                          <div className="document-card" key={document.id}>
+
+                            <div className="document-info">
+                                <h3>{document.title}</h3>
+
+                                <p>
+                                    Uploaded:{""}
+                                    {new Date(document.uploaded_at).toLocaleDateString()}
+                                </p> 
+
+                            </div>
+
+                            <span className="document-status">
+                                Ready
+                            </span>
+
+                          </div>  
+                        ))}
+
+                    </div>
+
+
+                </section>
 
                 <h2>Upload Study Notes</h2>
 
