@@ -22,7 +22,7 @@ def normalize_answer(text):
     return re.sub(r"[^a-z0-9]+", "", text.casefold())
 
 
-def generate_quiz_questions(source_text, num_questions=5):
+def generate_quiz_questions_once(source_text, num_questions=5):
     """
     Generate multiple-choice questions from study notes using Ollama.
 
@@ -42,14 +42,25 @@ def generate_quiz_questions(source_text, num_questions=5):
         raise ValueError("The number of questions must be between 1 and 20.")
     
     #This section tell Qwen3 what to due
+   
     prompt = f"""
 /no_think
 
-Generate exactly {num_questions} multiple-choice questions
+You are a multiple-choice quiz generator.
+
+Generate EXACTLY {num_questions} multiple-choice questions
 using ONLY the study notes provided below.
 
-Requirements:
-- Every question must have non-empty question_text.
+STRICT REQUIREMENTS:
+- Generate exactly {num_questions} questions.
+- Number the questions internally from 1 to {num_questions}.
+- Before returning, verify that you generated {num_questions} questions.
+- If you have fewer than {num_questions}, generate additional questions.
+- If you have more than {num_questions}, remove the extras.
+- EVERY question MUST include an explanation field.
+- The explanation must contain at least one complete sentence.
+- Never leave explanation empty, null, or missing.
+- Explain briefly why the correct answer is correct.
 - Every question must have exactly four unique choices.
 - correct_answer must exactly match one of the four choices.
 - Every question must have a non-empty explanation.
@@ -76,8 +87,11 @@ Use this JSON structure:
     ]
 }}
 
-The example illustrates the format only. Generate questions
-appropriate to the actual study notes.
+The example illustrates the format only.
+Generate questions appropriate to the actual study notes.
+
+IMPORTANT:
+The JSON must contain exactly {num_questions} question objects.
 
 STUDY NOTES:
 {source_text}
@@ -263,3 +277,31 @@ STUDY NOTES:
             )
 
     return questions
+
+def generate_quiz_questions(source_text, num_questions=5):
+    """
+    Generate a quiz and retry if the AI produces invalid questions.
+    """
+
+    max_attempts = 3
+    last_error = None
+
+    for attempt in range(1, max_attempts + 1):
+
+        try:
+            print(f"Quiz generation attempt {attempt}/{max_attempts}")
+
+            return generate_quiz_questions_once(
+                source_text,
+                num_questions
+            )
+
+        except RuntimeError as exc:
+            last_error = exc
+
+            print(f"Quiz generation attempt {attempt} failed: {exc}")
+
+    raise RuntimeError(
+        f"Quiz generation failed after {max_attempts} attempts. "
+        f"Last error: {last_error}"
+    )
