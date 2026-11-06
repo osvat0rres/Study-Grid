@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import api from "../../api";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./documents.css";
 
 function Documents() {
+
     
     // Store selected file
     const [file, setFile] = useState(null);
@@ -20,6 +21,9 @@ function Documents() {
 
     // Stores quiz generation errors
     const [quizError, setQuizError] = useState("");
+
+    // This lets React navigate to another page without refreshing the browser
+    const navigate = useNavigate();
 
     // runs when the user select the file
     // event represents the input event
@@ -76,6 +80,9 @@ function Documents() {
             });
 
             console.log("Generated quiz:", response.data);
+
+            // Navigate to the quiz page using its ID.
+            navigate(`/quiz/${response.data.id}`);
 
             // This block of code will executes when something goes wrong 
             // inside the try block
