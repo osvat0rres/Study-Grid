@@ -1,44 +1,41 @@
-import React, { useState, useEffect } from "react";
 
-/*
-The useParams Hook allows you to access dynamic values from the URL In
-React Router. It helps render content based on route paramters like /user/:id
-*/
+import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import api from "../../api";
 
-function QuizPage(){
-    const { quizid } = useParams();
+function QuizPage() {
+    const { quizId } = useParams();
 
     const [quiz, setQuiz] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
     useEffect(() => {
-        const fetchQuiz = async() => {
-            try{
-                const reposonse = await api.get(`quizzes/${quizid}/`);
-                setQuiz(reposonse.data);
-            }catch(err){
-                console.error("Error loading the quiz:", err);
-                setError("Unable to load quiz");
-            }finally{
+        const fetchQuiz = async () => {
+            try {
+                const response = await api.get(`quizzes/${quizId}/`);
+                setQuiz(response.data);
+            } catch (err) {
+                console.error("Error loading quiz:", err);
+                setError("Unable to load this quiz.");
+            } finally {
                 setLoading(false);
             }
         };
-        fetchQuiz();
-    }, [quizid]);
 
-    if (loading){
+        fetchQuiz();
+    }, [quizId]);
+
+    if (loading) {
         return <p>Loading quiz...</p>;
     }
 
-    if (error){
+    if (error) {
         return <p>{error}</p>;
     }
 
-    return(
-        <main className="quiz-page">
+    return (
+        <div className="quiz-page">
             <h1>{quiz.title}</h1>
 
             <p>
@@ -51,9 +48,10 @@ function QuizPage(){
                         {index + 1}. {question.question_text}
                     </h3>
 
-                    {question.choices.map((choice, choiceIndex) => (
-                        <p key={choiceIndex}>
-                            {choice}
+                    
+                    {question.choices.map((choice) => (
+                        <p key={choice.id}>
+                            {choice.choice_text}
                         </p>
                     ))}
                 </div>
@@ -62,7 +60,7 @@ function QuizPage(){
             <Link to="/documents">
                 Back to Documents
             </Link>
-        </main>
+        </div>
     );
 }
 
