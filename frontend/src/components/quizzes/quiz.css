@@ -1,0 +1,210 @@
+
+/* Main quiz page */
+.quiz-page {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 35px;
+    background: #f4f7fc;
+    border-radius: 20px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #1e293b;
+}
+
+/* Quiz title */
+.quiz-page h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1d4ed8;
+    margin-bottom: 12px;
+}
+
+/* Questions counter */
+.quiz-page > p {
+    color: #64748b;
+    font-size: 15px;
+    margin-bottom: 30px;
+}
+
+/* Individual question cards */
+.quiz-question {
+    background: #ffffff;
+    padding: 28px;
+    margin-bottom: 24px;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 5px 18px rgba(15, 23, 42, 0.04);
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.quiz-question:hover {
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    transform: translateY(-2px);
+}
+
+/* Question text */
+.quiz-question h3 {
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 1.6;
+    margin-bottom: 22px;
+    color: #0f172a;
+}
+
+/* Answer choices */
+.quiz-choice {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    background: #f8fafc;
+    cursor: pointer;
+    font-size: 15px;
+    line-height: 1.5;
+    transition: all 0.2s ease;
+}
+
+/* Hover effect */
+.quiz-choice:hover {
+    background: #eff6ff;
+    border-color: #93c5fd;
+}
+
+/* Radio buttons */
+.quiz-choice input {
+    width: 18px;
+    height: 18px;
+    accent-color: #2563eb;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+/* Selected answer */
+.quiz-choice:has(input:checked) {
+    background: #dbeafe;
+    border-color: #2563eb;
+    color: #1e40af;
+    font-weight: 500;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.08);
+}
+
+/* Back to documents link */
+.quiz-page a {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 20px;
+    background: #2563eb;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 500;
+    transition: background 0.2s ease;
+}
+
+.quiz-page a:hover {
+    background: #1d4ed8;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .quiz-page {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    .quiz-page h1 {
+        font-size: 26px;
+    }
+
+    .quiz-question {
+        padding: 20px;
+    }
+
+    .quiz-question h3 {
+        font-size: 17px;
+    }
+
+    .quiz-choice {
+        padding: 14px;
+    }
+}
+
+
+/* Submit and retake button */
+.submit-quiz-btn {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    margin: 30px 0;
+    background: linear-gradient(135deg, #2563eb, #4f46e5);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.submit-quiz-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+}
+
+/* Results card */
+.quiz-results {
+    background: linear-gradient(135deg, #eff6ff, #eef2ff);
+    border: 1px solid #bfdbfe;
+    padding: 30px;
+    margin-bottom: 30px;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.quiz-results h2 {
+    color: #1d4ed8;
+    margin-bottom: 15px;
+}
+
+.quiz-score {
+    font-size: 36px;
+    font-weight: 700;
+    color: #2563eb;
+    margin: 10px 0;
+}
+
+.quiz-percentage {
+    font-size: 24px;
+    font-weight: 600;
+    color: #4338ca;
+}
+
+/* Correct answer */
+.quiz-choice.correct-answer {
+    background: #dcfce7;
+    border-color: #22c55e;
+    color: #166534;
+}
+
+/* Incorrect selected answer */
+.quiz-choice.incorrect-answer {
+    background: #fee2e2;
+    border-color: #ef4444;
+    color: #991b1b;
+}
+
+/* Explanation and feedback */
+.question-feedback {
+    background: #f1f5f9;
+    padding: 18px;
+    margin-top: 20px;
+    border-radius: 10px;
+    border-left: 4px solid #2563eb;
+    line-height: 1.6;
+}
+
+.question-feedback p {
+    margin: 8px 0;
+}

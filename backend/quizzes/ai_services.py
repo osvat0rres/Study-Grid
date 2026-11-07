@@ -112,6 +112,8 @@ STUDY NOTES:
                 "think": False, # Request that the model's seperate thinking mode be disabled
                 "format": "json", #request a JSON-formatted reponse
                 "stream": False, #Waites for the response instead of reciving incremental chunks
+                "stream": False,
+                "keep_alive": "30m",
                 "options": {
                     "temperature": 0.2, #Increase more consistent output with less randomness
                     "repeat_penalty": 1.15, # Discourage repititive genration
