@@ -50,3 +50,11 @@ registration form
 4. Django REST Framework - Validates information and creates account
 5. React displays the result - Success message or error message
 
+How QuizPage.js works
+1. Upload PDF/TXT note 
+2. Django extracts text 
+3.Ollama generate quiz questions
+4. Qustions saved in PostgresSQL
+5. React displays quiz to user
+6. User answer and Submits quiz
+7. Scores + correct answer + explanations
