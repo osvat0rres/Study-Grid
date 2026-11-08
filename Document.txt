@@ -49,3 +49,4 @@ registration form
 3. handleSubmit() Submits the form using registerUser()
 4. Django REST Framework - Validates information and creates account
 5. React displays the result - Success message or error message
+
