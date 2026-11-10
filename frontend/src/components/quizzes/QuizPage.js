@@ -23,6 +23,10 @@ function QuizPage() {
     // Store the number of correct answers
     const [score, setScore] = useState(0);
 
+    const [savingAttempt, setSavingAttempt] = useState(false);
+    const [saveError, setSaveError] = useState("")
+    
+
     useEffect(() => {
         const fetchQuiz = async () => {
             try {
@@ -59,46 +63,83 @@ function QuizPage() {
     };
 
     // Submit and grade the quiz.
-    const handleSubmit = () => {
-        // This finds unanswered question
-        const unanswered = quiz.questions.filter(
-            (question) => answers[question.id] === undefined
-        );
+   const handleSubmit = async () => {
 
-        // This prevents submission if any questions are unanaswered
-        if (unanswered.length > 0) {
-            alert(`Please answer all questions. ${unanswered.length} remaining.`);
-            return;
-        }
+    // this checks whether the student answerr everything
+    const unanswered = quiz.questions.filter(
+        (question) => answers[question.id] === undefined
+    );
 
-        // initialuze the score, is set to zero because the quiz has not been grade it yet
+    //This prevents the user from submitting incomplete quizzes 
+    if (unanswered.length > 0) {
+        alert(`Please answer all questions. ${unanswered.length} remaining.`);
+        return;
+    }
+
+    // Starting the save procces
+    setSavingAttempt(true);
+    setSaveError("");
+
+    // This calculates the score 
+    try {
         let correctAnswers = 0;
 
-        // if the quiz conatans fice questions, the loop executes five time
+        /* 
+        This finds the choice selected by the student for the current question
+        For example: 
+        [
+            { id: 1, choice_text: "Water", is_correct: false },
+            { id: 2, choice_text: "Sunlight", is_correct: true },
+            { id: 3, choice_text: "Oxygen", is_correct: false },
+            { id: 4, choice_text: "Carbon", is_correct: false }
+        ]
+         If the student selected choice 2, selectedChoice will contian the Sunligh object 
+         then the follwoing function happen
+        */
         quiz.questions.forEach((question) => {
-            /*
-                The .find() method searches an array and retursn the first element
-                matching the condition
-            */
             const selectedChoice = question.choices.find(
                 (choice) => choice.id === answers[question.id]
             );
 
-            // Check if the anser is correct
-
-            /* The ?. is called optional chaining 
-                optional chnaging sefely access nested object propertirs or method by returning 
-                undefined instead of throwing an error when a reference is null or undefined
-            */
+            /*
+                The ?. is called oprional chaining.
+                if sefly checks whether selectedChoise exits before accessing 
+                is_correct 
+             */
             if (selectedChoice?.is_correct) {
-                // if the answer is correct this increases the score by one
                 correctAnswers++;
             }
         });
 
-        // Give the final score
+        // Send the quiz score to Django
+        await api.post("quizzes/attempts/", {
+            /*
+                The data we send
+                {
+                    "quiz_id": 24,
+                    "score": 4
+                }
+             */
+            quiz_id: quiz.id,
+            score: correctAnswers,
+        });
+
+        // Display results after the attempt is saved
         setScore(correctAnswers);
         setSubmitted(true);
+
+        // This runs if Django is not running
+    } catch (err) {
+        console.error("Error saving quiz attempt:", err);
+
+        setSaveError(
+            err.response?.data?.error ||
+            "Unable to save quiz attempt. Please try again."
+        );
+
+    } finally {
+        setSavingAttempt(false);
+    }
     };
 
     // Retake the quiz.
@@ -214,10 +255,16 @@ function QuizPage() {
                 );
             })}
 
+            {saveError && (
+                <p className="quiz-save-error">
+                    {saveError}
+                </p>
+            )}
+
             {/* Submit and retake buttons */}
             {!submitted ? (
-                <button className="submit-quiz-btn" onClick={handleSubmit}>
-                    Submit Quiz
+                <button className="submit-quiz-btn" onClick={handleSubmit}  disabled={savingAttempt}>
+                    {savingAttempt ? "Saving your results...." : "Submit Quiz"}
                 </button>
             ) : (
                 <button className="submit-quiz-btn" onClick={handleRetake}>
