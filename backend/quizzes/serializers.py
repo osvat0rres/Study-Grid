@@ -1,6 +1,6 @@
 
 from rest_framework import serializers
-from .models import Quiz, Question, Choice
+from .models import Quiz, Question, Choice, QuizAttempt
 
 
 class ChoiceSerializer(serializers.ModelSerializer):
@@ -38,4 +38,24 @@ class QuizSerializer(serializers.ModelSerializer):
             "id",
             "created_at",
             "questions",
+        ]
+        
+        
+class QuizAttemptSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = QuizAttempt
+        fileds = [
+            "id",
+            "user",
+            "quiz",
+            "score",
+            "total_questions",
+            "percentage",
+            "completed_at",
+        ]
+        
+        read_only_fields = [
+            "id",
+            "user",
+            "completed_at",
         ]
