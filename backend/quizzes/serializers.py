@@ -44,7 +44,7 @@ class QuizSerializer(serializers.ModelSerializer):
 class QuizAttemptSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuizAttempt
-        fileds = [
+        fields = [
             "id",
             "user",
             "quiz",

@@ -118,66 +118,64 @@ class QuizViewSet(viewsets.ModelViewSet):
             QuizSerializer(quiz, context={"request": request}).data,
             status=status.HTTP_201_CREATED,
         )
-        
-        
+ 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def save_quiz_attempt(request):
-    
+
     quiz_id = request.data.get("quiz_id")
     score = request.data.get("score")
-    
+
     # Validate required information
     if quiz_id is None or score is None:
         return Response(
             {"error": "quiz_id and score are required."},
             status=status.HTTP_400_BAD_REQUEST
         )
-        
+
     # Find the quiz
     try:
         quiz = Quiz.objects.get(id=quiz_id)
-        
     except Quiz.DoesNotExist:
         return Response(
-            {"error": "Quiz not found"},
+            {"error": "Quiz not found."},
             status=status.HTTP_404_NOT_FOUND
         )
-    
+
     # Get the actual number of questions
     total_questions = quiz.questions.count()
-    
+
     # Validate score
     try:
         score = int(score)
     except (ValueError, TypeError):
         return Response(
-            {"error": "Score must be a number"},
+            {"error": "Score must be a number."},
             status=status.HTTP_400_BAD_REQUEST
         )
-    
+
     if score < 0 or score > total_questions:
         return Response(
-            {"error" : "Score must be a mumber."},
+            {"error": "Invalid score."},
             status=status.HTTP_400_BAD_REQUEST
         )
-    
-    # Calculate percentage
-    percentage = round((score/ total_questions) * 100, 2) if total_questions else 0 
-    
+
+    # Calculate percentage on the backend
+    percentage = round((score / total_questions) * 100, 2) if total_questions else 0
+
     # Save the quiz attempt
     attempt = QuizAttempt.objects.create(
         user=request.user,
         quiz=quiz,
         score=score,
-        total_questions = total_questions,
-        percentage = percentage
+        total_questions=total_questions,
+        percentage=percentage
     )
-    
+
     # Return the saved attempt
     serializer = QuizAttemptSerializer(attempt)
-    
+
     return Response(
         serializer.data,
-        status=status.HTTP_201_CREATED        
+        status=status.HTTP_201_CREATED
     )

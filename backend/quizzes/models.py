@@ -51,8 +51,9 @@ class QuizAttempt(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE,
                              related_name="attemps")
     score = models.PositiveIntegerField()
+    total_questions = models.PositiveIntegerField()
     percentage = models.FloatField()
-    complated_at = models.DateTimeField(auto_now_add=True)
+    completed_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return f"{self.user.username} - {self.quiz.title} - {self.percentage}"

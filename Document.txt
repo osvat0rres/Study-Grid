@@ -58,3 +58,5 @@ How QuizPage.js works
 5. React displays quiz to user
 6. User answer and Submits quiz
 7. Scores + correct answer + explanations
+
+
