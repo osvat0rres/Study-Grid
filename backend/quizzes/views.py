@@ -179,3 +179,17 @@ def save_quiz_attempt(request):
         serializer.data,
         status=status.HTTP_201_CREATED
     )
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def quiz_history(request):
+    # Get only the attempt belonging to the logged-in user
+    attempt = QuizAttempt.objects.filter(
+        user=request.user
+        # The minus sign means quiz sttempts first
+    ).order_by("-completed_at")
+    
+    # Convert the attempst into JSON
+    serilaizer = QuizAttemptSerializer(attempt, many=True)
+    
+    return Response(serilaizer.data)
