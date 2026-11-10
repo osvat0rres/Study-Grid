@@ -59,4 +59,24 @@ How QuizPage.js works
 6. User answer and Submits quiz
 7. Scores + correct answer + explanations
 
+The folloing code is uses to test assume quiz ID 12 exits. I there is a different quiz 
+number replace 12 with that number
+```
 
+const token = localStorage.getItem("access");
+
+fetch("http://127.0.0.1:8000/api/quizzes/attempts/", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+    },
+    body: JSON.stringify({
+        quiz_id: 12,
+        score: 4
+    })
+})
+.then(response => response.json())
+.then(data => console.log("Saved attempt:", data))
+.catch(error => console.error(error));
+```
