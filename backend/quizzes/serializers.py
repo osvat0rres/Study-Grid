@@ -42,12 +42,18 @@ class QuizSerializer(serializers.ModelSerializer):
         
         
 class QuizAttemptSerializer(serializers.ModelSerializer):
+     # Return the quiz title instead of displaying only its ID
+    quiz_title = serializers.CharField(
+        source="quiz.title",
+        read_only=True
+    )
     class Meta:
         model = QuizAttempt
         fields = [
             "id",
             "user",
             "quiz",
+            "quiz_title",
             "score",
             "total_questions",
             "percentage",

@@ -66,7 +66,7 @@ function QuizHistory() {
             */}
             {attempt.map((attempt) => (
                 <div key={attempt.id}>
-                    <h3>Quiz ID:{attempt.quiz}</h3>
+                    <h3>Quiz ID:{attempt.quiz_title}</h3>
 
                     <p>Score: {attempt.score} / {attempt.total_questions}</p>
 
