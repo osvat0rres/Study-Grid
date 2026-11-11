@@ -27,6 +27,11 @@ function QuizHistory() {
                 setLoading(false);
             }
         };
+        /*
+            The empty dependency array [] means this effect runs when the component mounts.
+            That means when a student opens Quiz History, React automatically request their saved 
+            attempts 
+         */
         fetchHistory();
     }, []);
 
@@ -44,8 +49,26 @@ function QuizHistory() {
         return <p>You haven't completed any quizzes yet.</p>;
     }
     return(
-        <>
-        </>
+        <section>
+            <h1>Quiz History</h1>
+
+            {/* Displays multiple attempst
+                map() loops throught every attempt and creates section for it
+            
+            */}
+            {attempts.map((attempts) => (
+                <div key={attempts.id}>
+                    <h3>Quiz ID:{attempts.quiz}</h3>
+
+                    <p>Score: {attempts.score} / {attempts.total_questions}</p>
+
+                    <p>Percentage: {attempts.percentage}%</p>
+
+                    <p>Completed at: {new Date(attempts.completed_at).toLocaleDateString()}</p>
+
+                </div>
+            ))}
+        </section>  
     );
 }
 
