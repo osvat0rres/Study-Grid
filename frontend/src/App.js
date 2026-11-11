@@ -8,6 +8,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import Documents from "./components/documents/Documents";
 import QuizPage from "./components/quizzes/QuizPage";
+import QuizHistory from "./components/quizzes/QuizHistory";
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
                 <Route path="/dashboard" element={<ProtectedRoute> <Dashboard/> </ProtectedRoute>} />
                 <Route path="/documents" element={<ProtectedRoute> <Documents />  </ProtectedRoute>} />
                 <Route path="/quiz/:quizId" element={<ProtectedRoute> <QuizPage/> </ProtectedRoute>}/>
+                <Route path="/quiz-history" element={<ProtectedRoute> <QuizHistory/> </ProtectedRoute>} />
                 <Route path="/" element={<Navigate to="/register" />} /> 
             </Routes>
         </BrowserRouter>

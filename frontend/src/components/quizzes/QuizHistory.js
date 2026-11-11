@@ -4,7 +4,7 @@ import api from "../../api";
 function QuizHistory() {
 
     // Stores the quiz attempts returned by Django
-    const [attempts, setAttempts] = useState([]);
+    const [attempt, setAttempt] = useState([]);
 
     //Control the loading message
     const [loading, setLoading] = useState(true);
@@ -15,14 +15,22 @@ function QuizHistory() {
     useEffect(() => {
         const fetchHistory = async () => {
             try{
-                const response = await api.await.get("quizzes/history/");
+                const response = await api.get("quizzes/history/");
 
                 //Stores the quiz attemps in React state
-                setAttempts(response.data);
+                setAttempt(response.data);
 
             }catch (err){
                 console.error("Error fetching quiz history:", err);
-                setError("Unable to load quiz history");
+
+                console.log("Status: ", err.response?.status);
+                console.log("Backend response: ", err.response?.data);
+
+                setError(
+                    err.response?.data?.detail || 
+                    err.response?.data?.error ||
+                    "Unable to lead quiz history."
+                )
             }finally{
                 setLoading(false);
             }
@@ -45,7 +53,7 @@ function QuizHistory() {
         return<p>{error}</p>
     }
 
-    if(attempts.length === 0){
+    if(attempt.length === 0){
         return <p>You haven't completed any quizzes yet.</p>;
     }
     return(
@@ -56,15 +64,15 @@ function QuizHistory() {
                 map() loops throught every attempt and creates section for it
             
             */}
-            {attempts.map((attempts) => (
-                <div key={attempts.id}>
-                    <h3>Quiz ID:{attempts.quiz}</h3>
+            {attempt.map((attempt) => (
+                <div key={attempt.id}>
+                    <h3>Quiz ID:{attempt.quiz}</h3>
 
-                    <p>Score: {attempts.score} / {attempts.total_questions}</p>
+                    <p>Score: {attempt.score} / {attempt.total_questions}</p>
 
-                    <p>Percentage: {attempts.percentage}%</p>
+                    <p>Percentage: {attempt.percentage}%</p>
 
-                    <p>Completed at: {new Date(attempts.completed_at).toLocaleDateString()}</p>
+                    <p>Completed at: {new Date(attempt.completed_at).toLocaleDateString()}</p>
 
                 </div>
             ))}
