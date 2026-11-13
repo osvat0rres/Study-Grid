@@ -57,4 +57,28 @@ class QuizAttempt(models.Model):
     
     def __str__(self):
         return f"{self.user.username} - {self.quiz.title} - {self.percentage}"
+
+
+
+class QuizAttemptAnswer(models.Model):
     
+    # Connects the answer to a specific quiz attempt
+    attempt = models.ForeignKey(
+        QuizAttempt, 
+        on_delete=models.CASCADE,
+        related_name="answer"
+    )
+    
+    # Identifies the questions being answered 
+    question = models.ForeignKey(
+        Question,
+        on_delete=models.CASCADE   
+    )
+    
+    # Saves the student's selected answer
+    selected_answer = models.CharField(max_length=255)
+    
+    #Saves wheather the answer was correct
+    is_correct = models.BooleanField()
+    def __str__(self):
+        return f"{self.attempt} - {self.question}"
