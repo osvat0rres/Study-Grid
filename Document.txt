@@ -80,3 +80,18 @@ fetch("http://127.0.0.1:8000/api/quizzes/attempts/", {
 .then(data => console.log("Saved attempt:", data))
 .catch(error => console.error(error));
 ```
+quizzes/views.py
+Summary
+Concept:                Purpose:
+request.data            Recives data from React
+.get()                  Retrieves a value from a dictionary
+try/except              Handles database exeption
+.objects.get()          Retrieves one database objects
+.objects.filter()       Filters databse records
+.count()                Counts database records
+for loop                Processes each submitted answer
+set()                   Stores unique IDs
+.append()               Adds data to a list
+.values_list()          Retrieves specific database fields
+.objects.create()       Create a databse operations
+transactions.atomic()   Protects multiple databse operatiosn
