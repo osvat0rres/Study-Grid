@@ -113,15 +113,36 @@ function QuizPage() {
 
         // Send the quiz score to Django
         await api.post("quizzes/attempts/", {
-            /*
-                The data we send
-                {
-                    "quiz_id": 24,
-                    "score": 4
-                }
-             */
             quiz_id: quiz.id,
-            score: correctAnswers,
+
+            // Goes to every question in the quiz and creates an arrey of answers
+            answers: quiz.questions.map((question) => {
+                // Finds the choise the student selected using the chocie ID store in your answers states
+                const selectedChoise = question.choices.find(
+                    (choice) => choice.id === answers[question.id]
+                );
+                return {
+                    question_id: question.id,
+                    selected_answer: selectedChoise.choice_text,
+                };
+
+                /*
+                {
+                    "quiz_id": 3,
+                    "answers": [
+                        {
+                            "question_id": 10,
+                            "selected_answer": "Sunlight"
+                        },
+                        {
+                            "question_id": 11,
+                            "selected_answer": "Oxygen"
+                        }
+                    ]
+                }
+                 */
+            }),
+            
         });
 
         // Display results after the attempt is saved
@@ -129,14 +150,12 @@ function QuizPage() {
         setSubmitted(true);
 
         // This runs if Django is not running
-    } catch (err) {
-        console.error("Error saving quiz attempt:", err);
+    } catch (error){
+            console.error("Error saving quiz attempt:", error.response?.data);
+    console.error("Status:", error.response?.status);
+    console.error("Full error:", error);
 
-        setSaveError(
-            err.response?.data?.error ||
-            "Unable to save quiz attempt. Please try again."
-        );
-
+    setError("Unable to save quiz attempt. Please try again.");
     } finally {
         setSavingAttempt(false);
     }
