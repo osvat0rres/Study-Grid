@@ -78,3 +78,65 @@ class QuizAttemptAnswerSerializer(serializers.ModelSerializer):
         ]
         
         read_only_fields = ["id", 'is_correct']
+        
+        
+class QuizAttemptAnswerReviewSerializer(serializers.ModelSerializer):
+    
+    question_text = serializers.CharField(
+        source = "question.question_text",
+        read_only =True
+    )
+    
+    correct_answer = serializers.SerializerMethodField()
+    
+    explanation = serializers.CharField(
+        source="question.explanation",
+        read_only=True
+    )
+    
+    class Meta:
+        model = QuizAttemptAnswer
+        fields = [
+             "id",
+            "question_text",
+            "selected_answer",
+            "correct_answer",
+            "is_correct",
+            "explanation",
+        ]
+        
+        def get_correct_answer(self, obj):
+            correct_choice = obj.question.choices.filter(
+                is_correct=True
+            ).first()
+            
+            if correct_choice:
+                return correct_choice.choice_text
+            return None
+        
+class QuizAttemptReviewSerializer(serializers.ModelSerializer):
+    
+    quiz_title = serializers.CharField(
+        source = "quiz.title",
+        read_only=True
+    )
+    
+    
+    answers = QuizAttemptAnswerReviewSerializer(
+        many=True,
+        read_only = True
+    )
+    
+    class Meta:
+        model = QuizAttempt
+        fields = [
+            "id",
+            "quiz_title",
+            "score",
+            "total_questions",
+            "percentage",
+            "completed_at",
+            "answers",
+        ]
+    
+    
