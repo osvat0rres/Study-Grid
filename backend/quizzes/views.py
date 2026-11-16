@@ -9,10 +9,12 @@ from rest_framework.response import Response
 
 from documents.models import Document
 from .models import Quiz, Question, Choice, QuizAttempt, QuizAttemptAnswer
-from .serializers import QuizSerializer, QuizAttemptSerializer
+from .serializers import QuizSerializer, QuizAttemptSerializer, QuizAttemptAnswerReviewSerializer
 from .ai_services import generate_quiz_questions
 
 from django.db import transaction
+from django.shortcuts  import get_object_or_404
+
 
 
 class QuizViewSet(viewsets.ModelViewSet):
@@ -293,3 +295,22 @@ def quiz_history(request):
     serilaizer = QuizAttemptSerializer(attempt, many=True)
     
     return Response(serilaizer.data)
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def quiz_attempt_review(request, attemp_id):
+    
+    # Find the quiz attempt belonging to the logged-in user
+    attempt = get_object_or_404(
+        QuizAttempt,
+        id=attemp_id,
+
+        # ensures students can only review their own attempts
+        user=request.user
+    )
+    
+    # Converts the attempt into JSON
+    serializer = QuizAttemptAnswerReviewSerializer(attempt)
+    
+    # Sends the JSON back to React
+    return Response(serializer.data) 
