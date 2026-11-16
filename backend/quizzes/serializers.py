@@ -82,6 +82,7 @@ class QuizAttemptAnswerSerializer(serializers.ModelSerializer):
         
 class QuizAttemptAnswerReviewSerializer(serializers.ModelSerializer):
     
+    #Retrieve the question from the Quistion model
     question_text = serializers.CharField(
         source = "question.question_text",
         read_only =True
@@ -89,6 +90,7 @@ class QuizAttemptAnswerReviewSerializer(serializers.ModelSerializer):
     
     correct_answer = serializers.SerializerMethodField()
     
+    #Retrieves the explanation stored with the question
     explanation = serializers.CharField(
         source="question.explanation",
         read_only=True
