@@ -2,7 +2,7 @@
 from rest_framework.routers import DefaultRouter
 from django.urls import path
 
-from .views import QuizViewSet, save_quiz_attempt, quiz_history
+from .views import QuizViewSet, save_quiz_attempt, quiz_history, quiz_attempt_review
 
 router = DefaultRouter()
 router.register("", QuizViewSet, basename="quiz")
@@ -10,6 +10,7 @@ router.register("", QuizViewSet, basename="quiz")
 urlpatterns = [
     path("attempts/", save_quiz_attempt, name="save_quiz_attempt"),
     path("history/", quiz_history, name="quiz_history"),
+    path("attempts/<int:attempt_id>/review/",quiz_attempt_review, name="quiz-attempt-review")
 ]
 
 urlpatterns += router.urls
