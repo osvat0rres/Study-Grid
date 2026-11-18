@@ -296,6 +296,8 @@ def quiz_history(request):
     
     return Response(serilaizer.data)
 
+
+
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def quiz_attempt_review(request, attempt_id):
@@ -304,13 +306,13 @@ def quiz_attempt_review(request, attempt_id):
     attempt = get_object_or_404(
         QuizAttempt,
         id=attempt_id,
-
-        # ensures students can only review their own attempts
+        
+        # Ensures the user can only see their own attempt
         user=request.user
     )
     
-    # Converts the attempt into JSON
+    # Converts the attempt to JSON
     serializer = QuizAttemptReviewSerializer(attempt)
     
     # Sends the JSON back to React
-    return Response(serializer.data) 
+    return Response(serializer.data)

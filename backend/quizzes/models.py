@@ -66,7 +66,7 @@ class QuizAttemptAnswer(models.Model):
     attempt = models.ForeignKey(
         QuizAttempt, 
         on_delete=models.CASCADE,
-        related_name="answer"
+        related_name="answers"
     )
     
     # Identifies the questions being answered 
