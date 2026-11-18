@@ -4,7 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import api from "../../api";
 import "./quizReview.css";
 
-function QuizReview() {
+function QuizReview() { 
     const { attemptId } = useParams();
 
     const [review, setReview] = useState(null);
@@ -19,6 +19,7 @@ function QuizReview() {
                 );
 
                 console.log("Quiz Review:", response.data);
+                console.log("Review Answers: ", response.data.answers)
                 setReview(response.data);
             } catch (err) {
                 console.error("Error loading quiz review:", err);
@@ -64,15 +65,16 @@ function QuizReview() {
 
             <div className="review-questions">
 
-                {(review.answers || []).map((answer, index) => (
+             {review.answers && review.answers.length > 0 ? (
+
+                review.answers.map((answer, index) => (
+
                     <div
                         key={answer.id}
                         className="review-question-card"
                     >
 
-                        <h3>
-                            Question {index + 1}
-                        </h3>
+                        <h3>Question {index + 1}</h3>
 
                         <p className="review-question-text">
                             {answer.question_text}
@@ -80,19 +82,16 @@ function QuizReview() {
 
                         <div className="review-answer">
                             <strong>Your Answer:</strong>
-
                             <p>{answer.selected_answer}</p>
                         </div>
 
                         <div className="review-correct-answer">
                             <strong>Correct Answer:</strong>
-
                             <p>{answer.correct_answer}</p>
                         </div>
 
                         <div className="review-explanation">
                             <strong>Explanation:</strong>
-
                             <p>{answer.explanation}</p>
                         </div>
 
@@ -103,13 +102,18 @@ function QuizReview() {
                                     : "review-result incorrect"
                             }
                         >
-                            {answer.is_correct
-                                ? "✓ Correct"
-                                : "✗ Incorrect"}
+                            {answer.is_correct ? "✓ Correct" : "✗ Incorrect"}
                         </div>
 
                     </div>
-                ))}
+
+                ))
+
+            ) : (
+
+                <p>No answers are available for this quiz attempt.</p>
+
+            )}
 
             </div>
 
