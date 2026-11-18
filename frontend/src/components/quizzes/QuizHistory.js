@@ -127,7 +127,7 @@ function QuizHistory() {
                             });
                         
                           return (
-                            <article className="history-card" key={attempt.id}>
+                            <Link to={`/quiz-review/${attempt.id}`} className="history-card-link" key={attempt.id}>
 
                                 <div className="history-card-header">
                                     <h2>{attempt.quiz_title}</h2>
@@ -157,7 +157,7 @@ function QuizHistory() {
                                     </span>
                                 </div>
 
-                            </article>
+                            </Link>
                         );
                         
                         

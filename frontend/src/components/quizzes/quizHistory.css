@@ -224,3 +224,19 @@
         grid-template-columns: 1fr;
     }
 }
+
+.history-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.history-card-link:hover .history-card {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.history-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
