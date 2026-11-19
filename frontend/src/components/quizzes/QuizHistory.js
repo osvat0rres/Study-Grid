@@ -124,39 +124,47 @@ function QuizHistory() {
                                 minute: "2-digit",
                             });
                         
-                          return (
-                            <Link to={`/quiz-review/${attempt.id}`} className="history-card-link" key={attempt.id}>
+                          
+                            return (
+                                <Link
+                                    to={`/quiz-review/${attempt.id}`}
+                                    className="history-card-link"
+                                    key={attempt.id}
+                                >
+                                    {/* Main card wrapper */}
+                                    <div className="history-card">
 
-                                <div className="history-card-header">
-                                    <h2>{attempt.quiz_title}</h2>
+                                        <div className="history-card-header">
+                                            <h2>{attempt.quiz_title}</h2>
 
-                                    <span className={`score-badge ${scoreClass}`}>
-                                        {Math.round(percentage)}%
-                                    </span>
-                                </div>
+                                            <span className={`score-badge ${scoreClass}`}>
+                                                {Math.round(percentage)}%
+                                            </span>
+                                        </div>
 
-                                <div className="history-card-score">
-                                    <span className="score-label">Your Score</span>
+                                        <div className="history-card-score">
+                                            <span className="score-label">Your Score</span>
 
-                                    <strong>
-                                        {attempt.score} / {attempt.total_questions}
-                                    </strong>
-                                </div>
+                                            <strong>
+                                                {attempt.score} / {attempt.total_questions}
+                                            </strong>
+                                        </div>
 
-                                <div className="history-card-footer">
-                                    <span>
-                                        <span className="footer-icon">📅</span>
-                                        {formattedDate}
-                                    </span>
+                                        <div className="history-card-footer">
+                                            <span>
+                                                <span className="footer-icon">📅</span>
+                                                {formattedDate}
+                                            </span>
 
-                                    <span>
-                                        <span className="footer-icon">🕒</span>
-                                        {formattedTime}
-                                    </span>
-                                </div>
+                                            <span>
+                                                <span className="footer-icon">🕒</span>
+                                                {formattedTime}
+                                            </span>
+                                        </div>
 
-                            </Link>
-                        );
+                                    </div>
+                                </Link>
+                            );
                         
                         
                     })}
