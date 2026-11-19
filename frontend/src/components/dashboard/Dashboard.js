@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { logoutUser, getCurrentUser } from "../../auth";
 import "./dashboard.css";
+import api from "../../api";
+
 function Dashboard() {
     /* Hook that allows to naviaget from one page to another programmatically
         without needing the user to click a regular link 
@@ -13,6 +15,16 @@ function Dashboard() {
 
    //Track whether the user information is loading
    const [loading, setLoading] = useState(true);
+
+   // Stores the user's quiz history
+   const [quizAttempts, setQuizAttempts] = useState([]);
+
+   // Stores the user's uploaded documenst
+   const [documents, setDocuments] = useState([]);
+
+   //Tracks whether the statistics are still loading
+   const [statsLoading, setStateLoading] = useState(true);
+
 
    useEffect(() =>{
     const fetchUser = async() => {
@@ -33,6 +45,37 @@ function Dashboard() {
     }
     fetchUser();
    },[navigate])
+
+
+   // Fetch quiz attempts and uploaded documents
+   useEffect(() => {
+    const fetchDashboardStats = async () => {
+        try {
+            // Get quiz history
+            const quizResponse = await api.get("quizzes/history/");
+
+            const quizData = quizResponse.data;
+
+            setQuizAttempts(
+                Array.isArray(quizData) ? quizData : quizData.results || []
+            );
+            // Get uploaded documents
+            const documentResponse = await api.get("documents/");
+
+            const documentData = documentResponse.data;
+
+            setDocuments(
+                Array.isArray(documentData)
+                    ? documentData : documentData.results || []
+            );
+        }catch (error){
+            console.error("Error loading dashboard statistics:", error);
+        }finally{
+            setStateLoading(false);
+        }
+    };
+    fetchDashboardStats();
+   }, []);
 
 
     //When the user logs out, it sends them to the login page
