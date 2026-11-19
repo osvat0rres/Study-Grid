@@ -68,9 +68,7 @@ function QuizHistory() {
         )
     }
 
-    if(attempt.length === 0){
-        return <p>You haven't completed any quizzes yet.</p>;
-    }
+
     return(
         <main className="quiz-history-page">
             {/* Page heading */}
