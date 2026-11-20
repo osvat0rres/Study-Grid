@@ -8,7 +8,7 @@ function Dashboard() {
     /* Hook that allows to naviaget from one page to another programmatically
         without needing the user to click a regular link 
     */
-    const navigate = useNavigate(); 
+   const navigate = useNavigate(); 
 
    //Store the logged-in users's information
    const [user, setUser] = useState(null);
@@ -77,6 +77,28 @@ function Dashboard() {
     fetchDashboardStats();
    }, []);
 
+    // Count how many quiz attempts the user has completed
+    const totalQuizzes = quizAttempts.length;
+
+    // Counts uploaded documents
+    const totalDocuments = documents.length;
+
+    // Adds all quiz percentages and divides by the number of attempts
+    const averageScore = totalQuizzes > 0
+        ? quizAttempts.reduce(
+            (total, attempt) => total + Number(attempt.percentage),
+            0
+        ) / totalQuizzes
+        : 0;
+
+
+    const highestScore = totalQuizzes > 0
+        ? Math.max(
+            ...quizAttempts.map(attempt => Number(attempt.percentage))
+        )
+        : 0;
+
+   
 
     //When the user logs out, it sends them to the login page
     const handleLogout = () =>{
@@ -137,6 +159,39 @@ function Dashboard() {
                         Turn you notes into quizzes
                         and imporve your learning with AI.
                     </p>
+                </section>
+
+                {/* Dashboard Statistics */}
+                <section className="dashboard-stats">
+
+                    <div className="stat-card">
+                        <h3>Quizz Completed</h3>
+                        <p>
+                            {statsLoading ? "..." : totalQuizzes}
+                        </p>
+                    </div>
+
+                    <div className="stat-card">
+                        <h3>Average Score</h3>
+                        <p>
+                            {statsLoading? "..." : `${averageScore.toFixed(1)}%`}
+                        </p>
+                    </div>
+
+                    <div className="stat-card">
+                        <h3>Highest Score</h3>
+                        <p>
+                            {statsLoading ? "..." : `${highestScore.toFixed(1)}%`}
+                        </p>
+                    </div>
+
+                    <div className="stat-card">
+                        <h3>Documents Uploaded</h3>
+                        <p>
+                            {statsLoading? "..." : totalDocuments}
+                        </p>
+
+                    </div>
                 </section>
 
                 {/* Dashboard cards */}
