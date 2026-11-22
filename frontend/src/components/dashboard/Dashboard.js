@@ -98,7 +98,16 @@ function Dashboard() {
         )
         : 0;
 
-   
+
+    // Get the 3 most recent quiz attempts
+    const recentQuizzes = [...quizAttempts]
+        .sort(
+            (a, b) =>
+                new Date(b.completed_at) - new Date(a.completed_at)
+        )
+        .slice(0, 3);
+
+  
 
     //When the user logs out, it sends them to the login page
     const handleLogout = () =>{
@@ -218,10 +227,72 @@ function Dashboard() {
                             View History →
                         </Link>
                     </div>
+                </section>
+
+                {/* Recent Quiz Activity */}
+                <section className="recent-activity">
+
+                    <div className="recent-activity-header">
+                        <h2>Recent Quiz Activity</h2>
+
+                        <Link to="/quiz-history">
+                            View All →
+                        </Link>
+                    </div>
+
+                    {statsLoading ? (
+                        <p>Loading recent quizzes...</p>
+                    ) : recentQuizzes.length === 0 ? (
+                        <p className="no-activity">
+                            You haven't completed any quizzes yet.
+                        </p>
+                    ) : (
+                        <div className="recent-quiz-list">
+
+                            {recentQuizzes.map(attempt => {
+
+                                const percentage = Number(attempt.percentage);
+
+                                const scoreClass = percentage >= 80 
+                                    ? "hight" : percentage > 50 ? "medium"
+                                    : "low";
+
+                                return (
+                                    <div className="recent-quiz-card" key={attempt.id}>
+
+                                        <div className="recent-quiz-info">
+                                            <h3>
+                                                {attempt.quiz_title || `Quiz #${attempt.quiz}`}
+                                            </h3>
+
+                                            <p>
+                                                Completed:{" "}
+                                                {new Date(attempt.completed_at).toLocaleDateString()}
+                                            </p>
+                                        </div>
+
+                                        <div className="recent-quiz-actions">
+
+                                            <span className={`score-badge ${scoreClass}`}>
+                                                {percentage.toFixed(1)}%
+                                            </span>
+
+                                            <Link to={`/quiz-review/${attempt.id}`}>
+                                                Review Quiz →
+                                            </Link>
+
+                                        </div>
+
+                                    </div>
+                                );
+                            })}
+
+                        </div>
+                    )}
 
                 </section>
-            </main>
 
+            </main>
         </div>
     );
 };
