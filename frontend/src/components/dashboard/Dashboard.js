@@ -240,6 +240,7 @@ function Dashboard() {
                         </Link>
                     </div>
 
+                    {/* Displays if data is still loading or if there are no quiz attempts  */}
                     {statsLoading ? (
                         <p>Loading recent quizzes...</p>
                     ) : recentQuizzes.length === 0 ? (
@@ -249,10 +250,13 @@ function Dashboard() {
                     ) : (
                         <div className="recent-quiz-list">
 
+                            {/* This is how we display multiple quiz attempts
+                                the map function goes throught each element in the array */}
                             {recentQuizzes.map(attempt => {
 
                                 const percentage = Number(attempt.percentage);
 
+                                // Displays the percentage of the score
                                 const scoreClass = percentage >= 80 
                                     ? "hight" : percentage > 50 ? "medium"
                                     : "low";
@@ -260,11 +264,14 @@ function Dashboard() {
                                 return (
                                     <div className="recent-quiz-card" key={attempt.id}>
 
+                                        {/* If the name of the quiz exits, then the name is display or
+                                         if it does not exits, the number of the quiz is display */}
                                         <div className="recent-quiz-info">
                                             <h3>
                                                 {attempt.quiz_title || `Quiz #${attempt.quiz}`}
                                             </h3>
 
+                                            {/* This displays the completion date */}
                                             <p>
                                                 Completed:{" "}
                                                 {new Date(attempt.completed_at).toLocaleDateString()}
