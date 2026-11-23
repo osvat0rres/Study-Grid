@@ -94,5 +94,15 @@ set()                   Stores unique IDs
 .append()               Adds data to a list
 .values_list()          Retrieves specific database fields
 .objects.create()       Create a databse operations
-transactions.atomic()   Protects multiple databse operatiosn
+transactions.atomic()   Protects multiple databse operations
 
+npm install rechard
+- Rechard is a charting libary for React that uses composable React 
+  componenst and SVG to build visualizations
+What does Recharts do?
+- LineChart: Creates a line chart
+- Line: displays the data as a line
+- XAxis: displays quiz numbers or dates
+- YAxis: displays score values
+- Toolips: Shows information when hovering over a data point
+- CartesianGrid: adds grid lines
