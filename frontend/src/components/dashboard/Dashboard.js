@@ -252,44 +252,78 @@ function Dashboard() {
                         <p>Track your progress over time</p>
                     </div>
 
+                    {/* 
+                        Conditional rendering. For this example we are using nested ternery operators.
+
+                        First Condition: IF statsLoading is true, React display "Loading performance data"
+
+                        Second Condition: If loading has finished but the arrey is empty, React displays a message 
+                        asking the students to complete a quiz
+
+                        Third Condition: If the data has loaded and at least one quiz exits, React displays the chart 
+
+                    */}
                     {statsLoading ? (
                         <p>Loading performance data...</p>
+
                     ) : performanceData.length === 0 ? (
                         <p className="no-activity">
                             Complete a quiz to see your performance chart.
                         </p>
+
                     ) : (
                         <div className="performance-chart">
 
+                            {/* 
+                                This component makes thechart responsive
+                                With out this componets the chart may not adjust correctly
+                                when the browser window changes size
+                            */}
                             <ResponsiveContainer width="100%" height={300}>
                                 <LineChart data={performanceData}>
 
+                                    {/* This creates the background grid lines */}
                                     <CartesianGrid
                                         strokeDasharray="3 3"
                                         stroke="#e2e8f0"
                                     />
 
+                                    {/* The X-axis is the horizoantal axis at the bottom of the chart */}
                                     <XAxis
                                         dataKey="quiz"
                                         stroke="#64748b"
                                     />
 
+                                    {/* The y-Axis is teh vertical axis on the left
+                                        The domain sets the chart's minimun and maximun values */}
                                     <YAxis
                                         domain={[0, 100]}
+                                        // This formats the number of the y-axis
                                         tickFormatter={(value) => `${value}%`}
                                         stroke="#64748b"
                                     />
 
+                                    {/* the tooltip displays additional informastion when the 
+                                        student moves their mouse over a chart point
+                                    */}
                                     <Tooltip
                                         formatter={(value) => [`${value}%`, "Score"]}
                                         labelFormatter={(label) => label}
                                     />
 
+                                        {/* This is the componrnt that actually draws the line connecting the quiz scores */}
                                     <Line
-                                        type="monotone"
-                                        dataKey="score"
-                                        stroke="#6366f1"
-                                        strokeWidth={3}
+
+                                        /*
+                                            type: creates a smooth line
+                                            dateKey: Uses the score property from the data
+                                            stroke: sets the line color to purple
+                                            strokeWidth: Sets the line thickness
+                                            dot: Controls the apperance of each quiz point
+                                            activaDot: Makes a point larger when hovered over
+                                         */
+
+                                        type="monotone" dataKey="score" stroke="#6366f1" strokeWidth={3}
                                         dot={{
                                             r: 5,
                                             fill: "#6366f1"
