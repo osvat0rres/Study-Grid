@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { data, Link, useNavigate } from "react-router-dom";
 import { logoutUser, getCurrentUser } from "../../auth";
 import "./dashboard.css";
 import api from "../../api";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
+
+
 
 function Dashboard() {
     /* Hook that allows to naviaget from one page to another programmatically
@@ -106,6 +109,17 @@ function Dashboard() {
                 new Date(b.completed_at) - new Date(a.completed_at)
         )
         .slice(0, 3);
+
+    const performanceData = [...quizAttempts]
+        .sort(
+            (a,b) =>
+                new Date(a.completed_at) - new Date(b.completed_at)
+        )
+        .map((attempt, index) => ({
+            quiz: `Quiz ${index + 1}`,
+            score: Number(attempt.percentage),
+            date: new Date(attempt.completed_at).toLocaleDateString()
+        }));
 
   
 
@@ -228,6 +242,72 @@ function Dashboard() {
                         </Link>
                     </div>
                 </section>
+                
+         
+                {/* Quiz Performance Chart */}
+                <section className="performance-section">
+
+                    <div className="performance-header">
+                        <h2>Quiz Performance</h2>
+                        <p>Track your progress over time</p>
+                    </div>
+
+                    {statsLoading ? (
+                        <p>Loading performance data...</p>
+                    ) : performanceData.length === 0 ? (
+                        <p className="no-activity">
+                            Complete a quiz to see your performance chart.
+                        </p>
+                    ) : (
+                        <div className="performance-chart">
+
+                            <ResponsiveContainer width="100%" height={300}>
+                                <LineChart data={performanceData}>
+
+                                    <CartesianGrid
+                                        strokeDasharray="3 3"
+                                        stroke="#e2e8f0"
+                                    />
+
+                                    <XAxis
+                                        dataKey="quiz"
+                                        stroke="#64748b"
+                                    />
+
+                                    <YAxis
+                                        domain={[0, 100]}
+                                        tickFormatter={(value) => `${value}%`}
+                                        stroke="#64748b"
+                                    />
+
+                                    <Tooltip
+                                        formatter={(value) => [`${value}%`, "Score"]}
+                                        labelFormatter={(label) => label}
+                                    />
+
+                                    <Line
+                                        type="monotone"
+                                        dataKey="score"
+                                        stroke="#6366f1"
+                                        strokeWidth={3}
+                                        dot={{
+                                            r: 5,
+                                            fill: "#6366f1"
+                                        }}
+                                        activeDot={{
+                                            r: 8
+                                        }}
+                                    />
+
+                                </LineChart>
+                            </ResponsiveContainer>
+
+                        </div>
+                    )}
+
+                </section>
+
+                    
 
                 {/* Recent Quiz Activity */}
                 <section className="recent-activity">
