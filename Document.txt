@@ -95,3 +95,4 @@ set()                   Stores unique IDs
 .values_list()          Retrieves specific database fields
 .objects.create()       Create a databse operations
 transactions.atomic()   Protects multiple databse operatiosn
+

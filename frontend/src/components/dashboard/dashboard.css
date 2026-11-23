@@ -226,3 +226,135 @@
         grid-template-columns: 1fr;
     }
 }
+
+
+/* Recent Quiz Activity Section */
+.recent-activity {
+    background: white;
+    padding: 25px;
+    margin: 30px 0;
+    border-radius: 16px;
+    border: 1px solid #e8eaf0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* Section heading */
+.recent-activity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.recent-activity-header h2 {
+    color: #1e293b;
+    font-size: 21px;
+    margin: 0;
+}
+
+.recent-activity-header a {
+    color: #6366f1;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.recent-activity-header a:hover {
+    color: #4338ca;
+    text-decoration: underline;
+}
+
+/* Quiz list */
+.recent-quiz-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* Individual quiz card */
+.recent-quiz-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 18px 20px;
+    border-radius: 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.recent-quiz-card:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+}
+
+/* Quiz information */
+.recent-quiz-info h3 {
+    color: #1e293b;
+    font-size: 16px;
+    margin: 0 0 7px;
+}
+
+.recent-quiz-info p {
+    color: #64748b;
+    font-size: 13px;
+    margin: 0;
+}
+
+/* Score and review link */
+.recent-quiz-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.recent-quiz-actions .score-badge {
+    padding: 7px 13px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.recent-quiz-actions a {
+    color: #6366f1;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.recent-quiz-actions a:hover {
+    color: #4338ca;
+    text-decoration: underline;
+}
+
+/* Empty state */
+.no-activity {
+    background: #f1f5f9;
+    padding: 25px;
+    border-radius: 12px;
+    color: #64748b;
+    text-align: center;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    .recent-activity {
+        padding: 18px;
+    }
+
+    .recent-quiz-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .recent-quiz-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .recent-activity-header h2 {
+        font-size: 18px;
+    }
+}
