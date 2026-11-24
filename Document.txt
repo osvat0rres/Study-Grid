@@ -112,3 +112,4 @@ Performance graph
     2. LineChart (Receive and organize the data)
     3. XAxis (Quiz number), TAxis (Percentage), Tooltip (score details), Line (Connects scores)
     4. User sees the performance chart
+5. 
