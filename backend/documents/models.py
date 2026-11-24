@@ -10,6 +10,7 @@ class Document(models.Model):
     )
     
     title = models.CharField(max_length=255)
+    subject = models.CharField(max_length=100, default="Other")
     file = models.FileField(upload_to="study_notes/")
     extracted_text = models.TextField(blank=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
