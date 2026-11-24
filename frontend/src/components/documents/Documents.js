@@ -9,6 +9,9 @@ function Documents() {
     // Store selected file
     const [file, setFile] = useState(null);
 
+    const [subject, setSubject] = useState("");
+    const [title, setTitle ] = useState("")
+
     // Store success and error message
     const [message, setMessage] = useState("");
     const [error, setError] = useState(""); 
@@ -122,13 +125,23 @@ function Documents() {
             return;
         }
 
+        if(!title.trim()){
+            setError("Please enter a docuement title.")
+            return;
+        }
+
+        if(!subject){
+            setError("Please select a subject")
+            return;
+        }
+
+
+
         // FormData allows us to send file through HTTP
         const formData = new FormData();
-
-        // Automatically use the filename as the document title
-        const documentTitle = file.name.replace(/\.[^/.]+$/, "");
-
-        formData.append("title", documentTitle);
+        
+        formData.append("title", title);
+        formData.append("subject", subject);
         formData.append("file", file);
 
         setMessage("");
@@ -141,8 +154,12 @@ function Documents() {
             setMessage("Document uploaded successfully!");
             await fetchDocuments();
 
-            //clears the file input visually
             event.target.reset();
+
+            setTitle("");
+            setSubject("");
+            setFile("");
+
         }catch (err){
             const responseData = err.response?.data;
 
@@ -180,7 +197,7 @@ function Documents() {
                         <p className="error-message">{documentsError}</p>
                     )}
 
-                    {!loadingDocuments && documents.lenght === 0 && (
+                    {!loadingDocuments && documents.length === 0 && (
                         <p>You haven't uploaded any documents yet.</p>
                     )}
 
@@ -191,6 +208,7 @@ function Documents() {
 
                             <div className="document-info">
                                 <h3>{document.title}</h3>
+                                <p>Subject: {document.subject}</p>
 
                                 <p>
                                     Uploaded:{""}
@@ -237,6 +255,40 @@ function Documents() {
                 )}
 
                 <form onSubmit={handleUpload}>
+                    {/* Document Title */}
+<label htmlFor="document-title">
+    Document Title
+</label>
+
+<input
+    id="document-title"
+    type="text"
+    placeholder="Example: Chapter 1 - Cell Structure"
+    value={title}
+    onChange={(event) => setTitle(event.target.value)}
+    required
+/>
+
+{/* Subject Dropdown */}
+<label htmlFor="document-subject">
+    Subject
+</label>
+
+<select
+    id="document-subject"
+    value={subject}
+    onChange={(event) => setSubject(event.target.value)}
+    required
+>
+    <option value="">Select a subject</option>
+    <option value="Biology">Biology</option>
+    <option value="Mathematics">Mathematics</option>
+    <option value="Computer Science">Computer Science</option>
+    <option value="History">History</option>
+    <option value="Chemistry">Chemistry</option>
+    <option value="Physics">Physics</option>
+    <option value="Other">Other</option>
+</select>
 
                     <label htmlFor="study-file">
                         Choose a study file

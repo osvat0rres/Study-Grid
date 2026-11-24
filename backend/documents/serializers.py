@@ -9,6 +9,7 @@ class DocumentSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "title",
+            "subject",
             "file",
             "uploaded_at",
             "extracted_text",
