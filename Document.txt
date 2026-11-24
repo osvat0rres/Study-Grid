@@ -106,3 +106,9 @@ What does Recharts do?
 - YAxis: displays score values
 - Toolips: Shows information when hovering over a data point
 - CartesianGrid: adds grid lines
+
+Performance graph
+    1. performanceData ( Quiz scores retrived from Django)
+    2. LineChart (Receive and organize the data)
+    3. XAxis (Quiz number), TAxis (Percentage), Tooltip (score details), Line (Connects scores)
+    4. User sees the performance chart
