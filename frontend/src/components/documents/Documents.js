@@ -255,41 +255,44 @@ function Documents() {
                 )}
 
                 <form onSubmit={handleUpload}>
+
                     {/* Document Title */}
-<label htmlFor="document-title">
-    Document Title
-</label>
+                    <label htmlFor="document-title">
+                        Document Title
+                    </label>
 
-<input
-    id="document-title"
-    type="text"
-    placeholder="Example: Chapter 1 - Cell Structure"
-    value={title}
-    onChange={(event) => setTitle(event.target.value)}
-    required
-/>
+                    <input
+                        id="document-title"
+                        type="text"
+                        placeholder="Example: Chapter 1 - Cell Structure"
+                        value={title}
+                        onChange={(event) => setTitle(event.target.value)}
+                        required
+                    />
 
-{/* Subject Dropdown */}
-<label htmlFor="document-subject">
-    Subject
-</label>
+                    {/* Subject Dropdown */}
+                    <label htmlFor="document-subject">
+                        Subject
+                    </label>
 
-<select
-    id="document-subject"
-    value={subject}
-    onChange={(event) => setSubject(event.target.value)}
-    required
->
-    <option value="">Select a subject</option>
-    <option value="Biology">Biology</option>
-    <option value="Mathematics">Mathematics</option>
-    <option value="Computer Science">Computer Science</option>
-    <option value="History">History</option>
-    <option value="Chemistry">Chemistry</option>
-    <option value="Physics">Physics</option>
-    <option value="Other">Other</option>
-</select>
+                    <select
+                        id="document-subject"
+                        value={subject}
+                        onChange={(event) => setSubject(event.target.value)}
+                        required
+                    >
+                        <option value="">Select a subject</option>
+                        <option value="Biology">Biology</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="History">History</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="Physics">Physics</option>
+                        <option value="Other">Other</option>
+                    </select>
 
+
+                    {/* This is the section where you select the file */}
                     <label htmlFor="study-file">
                         Choose a study file
                     </label>

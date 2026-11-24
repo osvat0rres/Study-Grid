@@ -300,3 +300,67 @@
 }
 
 
+/* Upload From Fields */
+
+.upload-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+
+/* Input labels*/
+.upload-card form label{
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+    margin-top: 8px;
+}
+
+/* Document Title and Subject Dropdown*/
+.upload-card form input[type="text"],
+.upload-card form select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #1e293b;
+    font-size: 14px;
+    outline: none;
+    transition:  border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Placeholder */
+.upload-card form input[type="text"]::placeholder {
+    color: #94a3b8;
+}
+
+/* Focus Effect */
+.upload-card form input[type="text"]:focus,
+.upload-card form select:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+}
+
+/* Subject Dropdown */
+.upload-card form select {
+    cursor: pointer;
+}
+
+/* Selected File */
+.selected-file {
+    font-size: 13px;
+    color: #475569;
+    background-color: #f1f5f9;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* Document Subject Display */
+.document-info p:first-of-type {
+    color: #6366f1;
+    font-size: 13px;
+    font-weight: 600;
+    margin-top: 6px;
+}
