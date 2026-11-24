@@ -116,7 +116,7 @@ function Dashboard() {
                 new Date(a.completed_at) - new Date(b.completed_at)
         )
         .map((attempt, index) => ({
-            quiz: `Quiz ${index + 1}`,
+            quiz: attempt.quiz_title ||`Quiz ${index + 1}`,
             score: Number(attempt.percentage),
             date: new Date(attempt.completed_at).toLocaleDateString()
         }));
@@ -305,10 +305,18 @@ function Dashboard() {
 
                                     {/* the tooltip displays additional informastion when the 
                                         student moves their mouse over a chart point
+                                        - Date
+                                        - quiz name 
+                                        - score
                                     */}
                                     <Tooltip
                                         formatter={(value) => [`${value}%`, "Score"]}
-                                        labelFormatter={(label) => label}
+                                        labelFormatter={(label,payload) => {
+                                            const date = payload?.[0].payload?.date;
+
+                                            return date ? `${label} (${date})` : label; 
+                                        }}
+                                        
                                     />
 
                                         {/* This is the componrnt that actually draws the line connecting the quiz scores */}
