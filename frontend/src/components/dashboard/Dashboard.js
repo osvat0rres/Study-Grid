@@ -109,7 +109,7 @@ function Dashboard() {
                 new Date(b.completed_at) - new Date(a.completed_at)
         )
         .slice(0, 3);
-
+    
     const performanceData = [...quizAttempts]
         .sort(
             (a,b) =>
