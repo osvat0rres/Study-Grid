@@ -63,6 +63,7 @@ function Home() {
 
                 </div>
 
+                {/* Floatindg AI card */}
                 <div className="hero-visual">
                     <div className="hero-card">
                         <span>AI QUIZ GENERATOR</span>

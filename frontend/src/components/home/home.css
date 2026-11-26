@@ -31,9 +31,21 @@ html {
     display: flex;
     align-items: center;
     justify-content: space-between;
+     /*
+        20px: Top and Bottom padding
+        8%: Left and rigth padding
+        The percentage is calculated based on the width of the 
+        parent container
+    */
     padding: 20px 8%;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(12px);
+     /*
+        A css property that nakes an element behave normally
+        while scrolling until it reacehs a specific point. Ones it 
+        reaches that position, it sticks in place while you 
+        continue scrolling
+    */
     position: sticky;
     top: 0;
     z-index: 100;
@@ -119,6 +131,10 @@ html {
     position: relative;
 }
 
+/*
+    Animation tells the browser to animate an element so 
+    it gradually appear while moving upwards into position
+*/
 .hero-content {
     max-width: 570px;
     animation: fadeInUp 0.9s ease both;
@@ -208,6 +224,7 @@ html {
     border: 1px solid #e2e8f0;
     border-radius: 20px;
     box-shadow: 0 25px 60px rgba(79, 70, 229, 0.15);
+    /* This is what makes the floating card */
     animation: floatCard 4s ease-in-out infinite;
 }
 
