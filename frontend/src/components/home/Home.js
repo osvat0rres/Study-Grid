@@ -1,11 +1,13 @@
+
 import React from "react";
-import { Link  } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./home.css";
 
-function Home(){
-    
-    return(
-        <main className="home-navbar">
+function Home() {
+
+    return (
+        <main className="home-page">
+
             {/* Navigation */}
             <nav className="home-navbar">
                 <Link to="/" className="home-logo">
@@ -14,17 +16,22 @@ function Home(){
                 </Link>
 
                 <div className="nav-links">
-                    <a href="#feature">Feature</a>
-                    <a href="#how-it-workd">How it Work</a>
+                    <a href="#features">Features</a>
+                    <a href="#how-it-works">How It Works</a>
                 </div>
 
-                <div className="nav-link">
-                    <Link to="/login" className="login-link">Login</Link>
-                    <Link to="/register" className="register-buttons">Register</Link>
+                <div className="nav-buttons">
+                    <Link to="/login" className="login-link">
+                        Login
+                    </Link>
+
+                    <Link to="/register" className="signup-button">
+                        Sign Up
+                    </Link>
                 </div>
             </nav>
 
-           {/* Hero Section */}
+            {/* Hero Section */}
             <section className="hero-section">
 
                 <div className="hero-content">
@@ -77,7 +84,7 @@ function Home(){
 
             </section>
 
-             {/* Features Section */}
+            {/* Features Section */}
             <section className="features-section" id="features">
 
                 <div className="section-heading">
@@ -191,7 +198,6 @@ function Home(){
                 <p>Study Smarter. Learn Faster.</p>
                 <p>© 2026 Study-Grid. All rights reserved.</p>
             </footer>
-
 
         </main>
     );
