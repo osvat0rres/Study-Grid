@@ -208,12 +208,22 @@ function Documents() {
 
                             <div className="document-info">
                                 <h3>{document.title}</h3>
-                                <p>Subject: {document.subject}</p>
+                                
+                                {/* Subject Badge 
+                                    The className dynamically creates a CSS class based on the subject
+                                */}
+                                <span className={`subject-badge subject-${(document.subject || "Other")
+                                        .toLowerCase()
+                                        .replace(/\s+/g, "-")}`}
+                                >
+                                    {document.subject || "Other"}
+
+                                </span>
 
                                 <p>
-                                    Uploaded:{""}
+                                    Uploaded:{" "}
                                     {new Date(document.uploaded_at).toLocaleDateString()}
-                                </p> 
+                                </p>
 
                             </div>
 

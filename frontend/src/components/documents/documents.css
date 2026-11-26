@@ -364,3 +364,62 @@
     font-weight: 600;
     margin-top: 6px;
 }
+
+/*
+    Based on the subject, the name of the subject will change
+*/
+
+/* Subject Badge */
+.subject-badge {
+    display: inline-block;
+    width: fit-content;
+    padding: 6px 12px;
+    margin-top: 8px;
+    margin-bottom: 6px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+/* Biology - Green */
+.subject-biology {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+/* Mathematics - Blue */
+.subject-mathematics {
+    background-color: #dbeafe;
+    color: #1d4ed8;
+}
+
+/* Computer Science - Purple */
+.subject-computer-science {
+    background-color: #ede9fe;
+    color: #6d28d9;
+}
+
+/* History - Orange */
+.subject-history {
+    background-color: #ffedd5;
+    color: #c2410c;
+}
+
+/* Chemistry - Pink */
+.subject-chemistry {
+    background-color: #fce7f3;
+    color: #be185d;
+}
+
+/* Physics - Cyan */
+.subject-physics {
+    background-color: #cffafe;
+    color: #0e7490;
+}
+
+/* Other - Gray */
+.subject-other {
+    background-color: #f1f5f9;
+    color: #475569;
+}
